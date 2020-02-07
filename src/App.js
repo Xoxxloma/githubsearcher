@@ -1,25 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { Navbar } from './components/NavBar/Navbar';
+import Home from './pages/Home';
+import About from './pages/About'
+import Profile from './pages/Profile';
+import { Alert } from './components/Alert/Alert';
+import { AlertState } from './Context/Alert/AlertState';
+import { GithubState } from './Context/Github/GithubState';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GithubState>
+      <AlertState>
+        <BrowserRouter>
+          <Navbar />
+          <div className="container pt-4">
+            <Alert />
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/about" component={About} />
+              <Route path="/profile/:name" component={Profile} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </AlertState>
+    </GithubState>
   );
 }
 
